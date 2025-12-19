@@ -1,152 +1,69 @@
-# Paris Affluence 3D - Cloud Heatmap Visualization 🗼
+# Paris Traffic Density Simulation
 
-Une visualisation web 3D interactive de la ville de Paris avec une heatmap en forme de nuages colorés représentant la densité d'affluence par zone.
+An interactive 3D web visualization simulating foot traffic in Paris. This project uses mathematical models to generate realistic movement patterns based on city points of interest.
 
-![Paris Traffic Visualization](https://via.placeholder.com/800x400?text=Paris+3D+Traffic+Visualization)
+## Features
 
-## ✨ Fonctionnalités
+- **H3 Indexing**: Uses the H3 hexagonal grid system for high-performance spatial aggregation.
+- **Granular Heatmap**: Generates a fluid density field with thousands of interpolated points.
+- **Realistic Simulation**: Algorithms based on hotspots with temporal multipliers to simulate urban life cycles.
+- **GPU Performance**: High-performance rendering using Deck.gl and Mapbox GL JS.
+- **Temporal Interpolation**: Smooth transitions between hours for continuous traffic animation.
 
-- 🗺️ **Carte 3D** avec bâtiments extrudés (Mapbox GL JS)
-- 🔷 **Hexagones H3** pour l'agrégation spatiale
-- ☁️ **Effet nuage** semi-transparent avec gradient de couleurs
-- 🎨 **Gradient de couleurs** : bleu → vert → jaune → rouge selon la densité
-- ⏰ **Contrôle temporel** : slider pour voir l'affluence par heure
-- 📅 **Sélection du jour** de la semaine
-- ▶️ **Animation** automatique des heures
-- 📊 **Statistiques** en temps réel
+## Technologies
 
-## 🛠️ Technologies
+- **Frontend**: Mapbox GL JS, Deck.gl
+- **Backend**: Node.js, Express
+- **Spatial Indexing**: H3 (Uber)
+- **Data**: Mathematical simulation based on Paris patterns.
 
-- **Frontend**: Mapbox GL JS + Deck.gl
-- **Backend**: Node.js + Express
-- **Indexation spatiale**: H3 (Uber)
-- **Données**: Mock data réaliste basé sur les patterns d'affluence parisiens
+## Installation
 
-## 🚀 Installation
-
-### Prérequis
+### Prerequisites
 
 - Node.js v18+ 
-- npm ou yarn
-- Un token Mapbox (gratuit) : [Créer un compte](https://account.mapbox.com/access-tokens/)
+- A Mapbox token
 
-### Étapes
+### Steps
 
-1. **Cloner le projet**
+1. **Clone the project**
 ```bash
-cd paris_busy_vizualisation
+git clone https://github.com/your-username/paris-traffic-simulation.git
+cd paris-traffic-simulation
 ```
 
-2. **Installer les dépendances**
+2. **Install dependencies**
 ```bash
 npm install
 ```
 
-3. **Configurer le token Mapbox** (optionnel, un token de demo est inclus)
+3. **Configure Mapbox token**
+Create a `.env` file at the root:
 ```bash
-# Éditer le fichier .env
-MAPBOX_TOKEN=votre_token_mapbox
+MAPBOX_TOKEN=your_mapbox_token_here
 ```
 
-4. **Lancer le serveur**
+4. **Start the server**
 ```bash
 npm start
 ```
 
-5. **Ouvrir dans le navigateur**
+5. **Open in browser**
 ```
 http://localhost:3000
 ```
 
-## 📁 Structure du Projet
+## Simulation Logic
 
-```
-paris_busy_vizualisation/
-├── frontend/
-│   ├── index.html          # Page principale
-│   ├── css/
-│   │   └── styles.css      # Styles de l'interface
-│   └── js/
-│       ├── main.js         # Point d'entrée de l'app
-│       ├── map.js          # Configuration Mapbox
-│       ├── layers.js       # Layers Deck.gl (nuages H3)
-│       ├── colorScale.js   # Gradient de couleurs
-│       ├── controls.js     # Contrôles UI
-│       └── dataService.js  # Gestion des données
-│
-├── backend/
-│   ├── server.js           # Serveur Express
-│   ├── routes/
-│   │   └── traffic.js      # API endpoints
-│   └── services/
-│       ├── h3Aggregator.js      # Service H3
-│       └── mockDataGenerator.js # Générateur de données
-│
-├── config/
-│   └── mapbox.config.js    # Configuration Mapbox
-│
-├── .env                    # Variables d'environnement
-├── package.json
-└── README.md
-```
+The simulation relies on several key concepts:
 
-## 🎮 Contrôles
+1. **Hotspots**: Over 50 points of interest each with an influence radius and base intensity.
+2. **Temporal Profiles**: Each location type has its own 24h and day-of-week traffic curve.
+3. **Gaussian Interpolation**: Heatmap points are calculated via a Gaussian falloff function to create natural gradients.
+4. **Jittering**: Random variations added to simulate the organic nature of crowds.
 
-| Contrôle | Description |
-|----------|-------------|
-| **Slider Heure** | Change l'heure affichée (0-23h) |
-| **Sélecteur Jour** | Change le jour de la semaine |
-| **Hauteur nuages** | Ajuste l'élévation des hexagones |
-| **Transparence** | Ajuste l'opacité des nuages |
-| **Bouton Animation** | Lance l'animation temporelle |
+## License
 
-## 📊 API Endpoints
+MIT License
 
-| Endpoint | Description |
-|----------|-------------|
-| `GET /api/traffic?hour=14&day=5` | Données pour une heure/jour spécifique |
-| `GET /api/traffic/all?day=5` | Toutes les heures d'un jour |
-| `GET /api/traffic/stats` | Statistiques des données |
-| `GET /api/health` | État du serveur |
-
-## 🎨 Personnalisation
-
-### Modifier le gradient de couleurs
-
-Éditer `frontend/js/colorScale.js` :
-
-```javascript
-const COLOR_STOPS = [
-  { value: 0, color: [41, 128, 185, 160] },   // Bleu
-  { value: 50, color: [46, 204, 113, 180] },  // Vert
-  { value: 100, color: [231, 76, 60, 220] }   // Rouge
-];
-```
-
-### Ajouter des hotspots
-
-Éditer `backend/services/mockDataGenerator.js` :
-
-```javascript
-const PARIS_HOTSPOTS = [
-  { name: 'Mon Lieu', lat: 48.xxx, lng: 2.xxx, basePop: 70, radius: 0.01, type: 'tourist' },
-  // ...
-];
-```
-
-## 🔮 Évolutions possibles
-
-- [ ] Intégration API BestTime.app pour données réelles
-- [ ] Intégration Outscraper / Google Popular Times
-- [ ] Mode comparaison entre deux heures
-- [ ] Export des données en GeoJSON
-- [ ] Filtrage par type de lieu
-- [ ] Vue satellite
-
-## 📝 Licence
-
-MIT License - Libre d'utilisation
-
----
-
-Fait avec ❤️ pour Paris
+Made with ❤️ for urban data visualization.

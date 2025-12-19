@@ -4,7 +4,7 @@
  */
 
 import { initializeMap, PARIS_VIEW } from './map.js';
-import { createAllLayers, LAYER_CONFIG, getColorPresets } from './layers.js';
+import { createAllLayers, LAYER_CONFIG } from './layers.js';
 import { Controls, Tooltip, LoadingOverlay } from './controls.js';
 import { fetchTrafficData, transformDataForLayers, calculateStats, DataCache } from './dataService.js';
 
@@ -142,14 +142,6 @@ function initControls() {
     onNoiseAmountChange: () => {},
     onAnimationSpeedChange: (speed) => {
       state.animationSpeed = speed;
-    },
-    
-    onPlayToggle: (isPlaying) => {
-      if (isPlaying) {
-        startSimpleAnimation();
-      } else {
-        stopAnimation();
-      }
     }
   });
 }
@@ -327,25 +319,6 @@ function interpolateWithMovement(t, time) {
     
     disp[i].position[0] = basePos[0] + offsetX * densityFactor;
     disp[i].position[1] = basePos[1] + offsetY * densityFactor;
-  }
-}
-
-/**
- * Simple linear interpolation between hours (fallback)
- */
-function interpolate(t) {
-  if (!state.currentHourData || !state.nextHourData || !state.displayData) return;
-  
-  const curr = state.currentHourData.points;
-  const next = state.nextHourData.points;
-  const disp = state.displayData.points;
-  
-  // Smooth t with simple easing
-  const smooth = t * t * (3 - 2 * t);
-  
-  const len = Math.min(curr.length, next.length, disp.length);
-  for (let i = 0; i < len; i++) {
-    disp[i].density = curr[i].density + (next[i].density - curr[i].density) * smooth;
   }
 }
 

@@ -14,7 +14,6 @@ export class Controls {
     // Basic callbacks
     this.onTimeChange = options.onTimeChange || (() => {});
     this.onDayChange = options.onDayChange || (() => {});
-    this.onPlayToggle = options.onPlayToggle || (() => {});
     
     // Main visualization callbacks
     this.onOpacityChange = options.onOpacityChange || (() => {});
@@ -88,11 +87,6 @@ export class Controls {
     // Animation speed slider
     this.animationSpeedSlider = document.getElementById('animation-speed-slider');
     this.animationSpeedDisplay = document.getElementById('animation-speed-display');
-    
-    // Play button
-    this.playBtn = document.getElementById('play-btn');
-    this.playIcon = document.getElementById('play-icon');
-    this.playText = document.getElementById('play-text');
     
     // Stats elements
     this.statZones = document.getElementById('stat-zones');
@@ -244,11 +238,6 @@ export class Controls {
         this.onAnimationSpeedChange(this.animationSpeed);
       });
     }
-    
-    // Play button
-    if (this.playBtn) {
-      this.playBtn.addEventListener('click', () => this.togglePlay());
-    }
   }
   
   updateTimeDisplay(hour) {
@@ -257,38 +246,10 @@ export class Controls {
     }
   }
   
-  togglePlay() {
-    this.isPlaying = !this.isPlaying;
-    
-    if (this.isPlaying) {
-      if (this.playBtn) this.playBtn.classList.add('playing');
-      if (this.playIcon) this.playIcon.textContent = '⏸';
-      if (this.playText) this.playText.textContent = 'Stop';
-    } else {
-      if (this.playBtn) this.playBtn.classList.remove('playing');
-      if (this.playIcon) this.playIcon.textContent = '▶';
-      if (this.playText) this.playText.textContent = 'Animate';
-    }
-    
-    this.onPlayToggle(this.isPlaying);
-  }
-  
   updateStats(stats) {
     if (this.statZones) this.statZones.textContent = stats.zones || '--';
     if (this.statAvg) this.statAvg.textContent = stats.avg !== undefined ? Math.round(stats.avg) : '--';
     if (this.statMax) this.statMax.textContent = stats.max !== undefined ? Math.round(stats.max) : '--';
-  }
-  
-  getValues() {
-    return {
-      hour: this.timeSlider ? parseInt(this.timeSlider.value) : 14,
-      day: this.daySelect ? parseInt(this.daySelect.value) : 5,
-      opacity: this.opacitySlider ? parseInt(this.opacitySlider.value) / 100 : 0.85
-    };
-  }
-  
-  destroy() {
-    // Nothing to clean up
   }
 }
 

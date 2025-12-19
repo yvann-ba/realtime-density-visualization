@@ -315,25 +315,3 @@ export function createAllLayers(pointData, options = {}) {
   
   return layers;
 }
-
-/**
- * Get available color presets
- */
-export function getColorPresets() {
-  return Object.keys(COLOR_PRESETS);
-}
-
-/**
- * Legacy support
- */
-export function createHexagonCloudLayer(data, options = {}) {
-  const pointData = data.map(d => ({
-    position: d.center || d.position,
-    density: d.density
-  }));
-  return createSeamlessHeatmapLayer(pointData, options);
-}
-
-export function createGlowLayer(data, options = {}) {
-  return createAmbientGlowLayer(data, options);
-}

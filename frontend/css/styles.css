@@ -414,49 +414,6 @@ select option {
 }
 
 /* ========================================
-   Play Button - Glass (Enhanced for animation)
-   ======================================== */
-.play-button {
-  width: 100%;
-  padding: 14px;
-  background: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(139, 92, 246, 0.15));
-  border: 1px solid rgba(99, 102, 241, 0.3);
-  border-radius: 12px;
-  color: #4f46e5;
-  font-size: 0.8rem;
-  font-weight: 600;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  transition: all 0.25s ease;
-  letter-spacing: 0.02em;
-}
-
-.play-button:hover {
-  background: linear-gradient(135deg, rgba(99, 102, 241, 0.25), rgba(139, 92, 246, 0.25));
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(99, 102, 241, 0.2);
-}
-
-.play-button.playing {
-  background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(5, 150, 105, 0.2));
-  border-color: rgba(16, 185, 129, 0.4);
-  color: #059669;
-  animation: pulse-glow 2s ease-in-out infinite;
-}
-
-@keyframes pulse-glow {
-  0%, 100% {
-    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.3);
-  }
-  50% {
-    box-shadow: 0 0 20px 4px rgba(16, 185, 129, 0.2);
-  }
-}
-
-/* ========================================
    Tooltip - Liquid Glass
    ======================================== */
 .tooltip {

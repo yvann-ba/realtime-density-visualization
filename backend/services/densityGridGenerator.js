@@ -307,25 +307,16 @@ function generateParisDensityData(hour = 14, day = 5, minute = 0, resolution = '
       hour,
       minute,
       day,
-      dayName: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'][day],
+      dayName: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][day],
       totalPoints: gridPoints.length,
       avgDensity: Math.round(avgDensity),
       maxDensity: Math.round(maxDensity),
-      minDensity: Math.round(minDensity),
+      minDensity: Math.min(...densities),
       generatedAt: new Date().toISOString()
     }
   };
 }
 
 module.exports = {
-  generateParisDensityData,
-  generateDensityGrid,
-  calculateDensityAt,
-  getInterpolatedTimeMultiplier,
-  lerp,
-  smoothstep,
-  BUSY_AREAS,
-  TIME_PATTERNS,
-  DAY_PATTERNS,
-  PARIS_BOUNDS
+  generateParisDensityData
 };
