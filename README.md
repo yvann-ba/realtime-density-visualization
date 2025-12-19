@@ -9,6 +9,29 @@ I'm working on this big planetary engine thing right now : https://terra-lab.ai/
 
 https://github.com/user-attachments/assets/126584bd-428e-4492-986f-9e259a30aac1
 
+## Process
+
+Modeled the city's density. Instead of real-time GPS pings, I use a probabilistic engine for fun. Mapped 50+ hotspots across Paris (Eiffel Tower, Business districts, Train stations)
+
+assigned them 168 unique temporal profiles, basically one for each hour of the week (24h x 7 days).
+
+The math engine knows how a Monday morning at La Defense differs from a Sunday evening at Sacre-Coeur
+
+2. Picked the spatial skeleton. Used Uber's H3 hexagonal indexing to pixelate Paris (cool tech btw thanks Uber).
+Hexagons ensure every neighbor is at the exact same distance, unlike square grids.
+
+It's seems a pretty precise and optimize way to handle spatial aggregation across the city's 105km2.
+
+3. Created cool looking heatmaps. tried to implement Gaussian Interpolation to avoid blocky visuals.
+Each hotspot acts as a source where influence decays exponentially.
+
+This creates fluid, cloud-like gradients that kind of look like to me how population move (thought it's not accurate just estimation)
+
+4. Mostly everything run on GPU (since I have a big one lol)
+
+Node.js handles the complex probability math in the backend
+
+DeckGL uses WebGL shaders to animate 17,000+ dynamic points in real-time
 
 ## Features
 
